@@ -3,6 +3,7 @@ import moment from 'moment';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import JobDataService from '../services/JobDataService.js';
 import FooterComponent from './FooterComponent.jsx';
+import HeaderComponent from '../views/HeaderComponent.jsx';
 
 class JobComponent extends Component {
     constructor(props) {
@@ -101,7 +102,8 @@ class JobComponent extends Component {
 
         return (
             <div>
-                <h1>Job</h1>
+                <HeaderComponent/>
+                <h4>New Job Form</h4>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-1">
@@ -120,42 +122,48 @@ class JobComponent extends Component {
                                         <Form>
                                             <ErrorMessage name="jobName" component="div" className="alert alert-warning"/>                                            
                                             <ErrorMessage name="jobCode" component="div" className="alert alert-warning"/>
-                                            <fieldset className="form-group">
-                                                <label>Job Code</label>
-                                                <Field className="form-control" type="text" name="jobCode"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Job Name</label>
-                                                <Field className="form-control" type="text" name="jobName"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Shift Code</label>
-                                                <Field className="form-control" type="text" name="shiftCode"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Activity Date</label>
-                                                <Field className="form-control" type="date" name="activityDate"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Activity Name</label>
-                                                <Field className="form-control" type="text" name="activityName"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Instance</label>
-                                                <Field className="form-control" type="text" name="instance"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Class Count</label>
-                                                <Field className="form-control" type="text" name="classCount"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Start Time</label>
-                                                <Field className="form-control" type="time" name="startTime"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>End Time</label>
-                                                <Field className="form-control" type="time" name="endTime"/>
-                                            </fieldset>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <fieldset className="form-group">
+                                                        <label>Job Code</label>
+                                                        <Field className="form-control" type="text" name="jobCode"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Job Name</label>
+                                                        <Field className="form-control" type="text" name="jobName"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Shift Code</label>
+                                                        <Field className="form-control" type="text" name="shiftCode"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Activity Date</label>
+                                                        <Field className="form-control" type="date" name="activityDate"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Activity Name</label>
+                                                        <Field className="form-control" type="text" name="activityName"/>
+                                                    </fieldset>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <fieldset className="form-group">
+                                                        <label>Instance</label>
+                                                        <Field className="form-control" type="text" name="instance"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Class Count</label>
+                                                        <Field className="form-control" type="text" name="classCount"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Start Time</label>
+                                                        <Field className="form-control" type="time" name="startTime"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>End Time</label>
+                                                        <Field className="form-control" type="time" name="endTime"/>
+                                                    </fieldset>
+                                                </div>
+                                            </div>                                                                              
                                             <button className="btn btn-success" type="submit">Save</button>
                                         </Form>
                                     )                        
@@ -166,6 +174,7 @@ class JobComponent extends Component {
                         </div>
                     </div>                    
                 </div>
+                <br/>
                 <FooterComponent/>
             </div>
         )

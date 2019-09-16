@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import RoleDataService from '../services/RoleDataService.js';
 import FooterComponentList from './FooterComponentList.jsx';
+import HeaderComponent from '../views/HeaderComponent.jsx';
 
 class RoleComponent extends Component {
     constructor(props) {
@@ -67,12 +68,14 @@ class RoleComponent extends Component {
 
         return (
             <div>
-                <h1>Role</h1>
+                <HeaderComponent/>
+                <h4>New Role Form</h4>
+                <hr/>
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-1">
+                        <div className="col-md-3">
                         </div>
-                        <div className="col-md-10">
+                        <div className="col-md-6">
                             <Formik 
                                 initialValues={{roleCode, roleName}}
                                 onSubmit={this.onSubmit}
@@ -100,7 +103,7 @@ class RoleComponent extends Component {
                                 }
                             </Formik>
                         </div>
-                        <div className="col-md-1">
+                        <div className="col-md-3">
                         </div>
                     </div>                    
                 </div>

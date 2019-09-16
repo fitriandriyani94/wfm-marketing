@@ -3,6 +3,7 @@ import moment from 'moment';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import EmployeeDataService from '../services/EmployeeDataService.js';
 import FooterComponent from './FooterComponent.jsx';
+import HeaderComponent from '../views/HeaderComponent.jsx';
 
 class EmployeeComponent extends Component {
     constructor(props) {
@@ -113,7 +114,9 @@ class EmployeeComponent extends Component {
 
         return (
             <div>
-                <h1>Employee</h1>
+                <HeaderComponent/>
+                <h4>New Employee Form</h4>
+                <hr/>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-1">
@@ -132,59 +135,65 @@ class EmployeeComponent extends Component {
                                         <Form>
                                             <ErrorMessage name="name" component="div" className="alert alert-warning"/>                                            
                                             <ErrorMessage name="username" component="div" className="alert alert-warning"/>
-                                            <fieldset className="form-group">
-                                                <label>Employee ID</label>
-                                                <Field className="form-control" type="text" name="employeeId"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Name</label>
-                                                <Field className="form-control" type="text" name="name"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Username</label>
-                                                <Field className="form-control" type="text" name="username"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Password</label>
-                                                <Field className="form-control" type="password" name="password"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Birth Place</label>
-                                                <Field className="form-control" type="text" name="birthPlace"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Birth Date</label>
-                                                <Field className="form-control" type="date" name="birthDate"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Address</label>
-                                                <Field className="form-control" type="text" name="address"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Gender</label>
-                                                <Field className="form-control" type="text" name="gender"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Phone Number</label>
-                                                <Field className="form-control" type="text" name="phoneNumber"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Email</label>
-                                                <Field className="form-control" type="text" name="email"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Join Date</label>
-                                                <Field className="form-control" type="date" name="joinDate"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Resignation Date</label>
-                                                <Field className="form-control" type="date" name="resignationDate"/>
-                                            </fieldset>
-                                            <fieldset className="form-group">
-                                                <label>Employee Status</label>
-                                                <Field className="form-control" type="text" name="employeeStatus"/>
-                                            </fieldset>
-                                            <button className="btn btn-success" type="submit">Save</button>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <fieldset className="form-group">
+                                                        <label>Employee ID</label>
+                                                        <Field className="form-control" type="text" name="employeeId"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Name</label>
+                                                        <Field className="form-control" type="text" name="name"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Username</label>
+                                                        <Field className="form-control" type="text" name="username"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Password</label>
+                                                        <Field className="form-control" type="password" name="password"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Birth Place</label>
+                                                        <Field className="form-control" type="text" name="birthPlace"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Birth Date</label>
+                                                        <Field className="form-control" type="date" name="birthDate"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Address</label>
+                                                        <Field className="form-control" type="text" name="address"/>
+                                                    </fieldset>
+                                                </div>
+                                                <div className="col-md-6">                                            
+                                                    <fieldset className="form-group">
+                                                        <label>Gender</label>
+                                                        <Field className="form-control" type="text" name="gender"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Phone Number</label>
+                                                        <Field className="form-control" type="text" name="phoneNumber"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Email</label>
+                                                        <Field className="form-control" type="text" name="email"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Join Date</label>
+                                                        <Field className="form-control" type="date" name="joinDate"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Resignation Date</label>
+                                                        <Field className="form-control" type="date" name="resignationDate"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Employee Status</label>
+                                                        <Field className="form-control" type="text" name="employeeStatus"/>
+                                                    </fieldset>
+                                                </div>                                                
+                                            </div>                                            
+                                            <button className="btn btn-success" type="submit">Save</button>                                            
                                         </Form>
                                     )                        
                                 }
@@ -194,6 +203,7 @@ class EmployeeComponent extends Component {
                         </div>
                     </div>                    
                 </div>
+                <br/>
                 <FooterComponent/>
             </div>            
         )

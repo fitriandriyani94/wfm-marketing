@@ -3,6 +3,7 @@ import Timeline from 'react-calendar-timeline';
 import 'react-calendar-timeline/lib/Timeline.css';
 import moment from 'moment'
 import FooterComponentList from './FooterComponentList.jsx';
+import HeaderComponent from '../views/HeaderComponent.jsx';
 
 class OptimizerComponent extends Component {
     render() {
@@ -53,6 +54,7 @@ class OptimizerComponent extends Component {
 
         return (
             <div>
+                <HeaderComponent/>
                 <div className="container">
                     <h3>Employee Scheduling</h3>
                     <Timeline

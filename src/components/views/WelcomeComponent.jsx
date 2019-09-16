@@ -3,11 +3,13 @@ import {Link} from 'react-router-dom';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
 import FooterComponentList from '../views/FooterComponentList.jsx';
+import HeaderComponent from '../views/HeaderComponent.jsx';
 
 class WelcomeComponent extends Component {
     render() {
         return(
             <>
+                <HeaderComponent/>
                 <Jumbotron>
                     {<h1>Welcome {this.props.match.params.name}</h1>}
                     <p>

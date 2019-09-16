@@ -3,6 +3,7 @@ import AuthenticationService from '../services/AuthenticationService.js';
 import LoginService from '../services/LoginService.js';
 import './LoginComponent.css';
 import FooterComponentList from '../views/FooterComponentList.jsx';
+import HeaderComponent from '../views/HeaderComponent.jsx';
 
 class LoginComponent extends Component {
     constructor(props) {
@@ -27,10 +28,10 @@ class LoginComponent extends Component {
             password:this.state.password
         })
         .then((resp) => {
-            console.log("Success Login: " + resp.data)
-            if(resp.data) {
-                AuthenticationService.registerSuccessfulLogin(this.state.email, this.state.password);
-                this.props.history.push(`welcome/${this.state.email}`)
+            console.log("Success Login: " + resp.data[1])
+            if(resp.data[0]) {
+                AuthenticationService.registerSuccessfulLogin(resp.data[1], this.state.password);
+                this.props.history.push(`welcome/${resp.data[1]}`)
             } else {
                 if(this.state.email === "fitri.andriyani" && this.state.password === "keepsecret") {
                     console.log("Success Login Admin")
@@ -44,6 +45,7 @@ class LoginComponent extends Component {
             }            
         })
         .catch(() => {
+            console.log("Catch Success Login")
             if(this.state.email === "fitri.andriyani" && this.state.password === "keepsecret") {
                 console.log("Success Login Admin")
                 AuthenticationService.registerSuccessfulLogin(this.state.email, this.state.password);
@@ -58,7 +60,9 @@ class LoginComponent extends Component {
 
     render() {
         return(
-            <div className="row">
+            <>
+            <HeaderComponent/>
+            <div className="row">                
                 <div className="col-md-4">
                 </div>
                 <div className="col-md-4">
@@ -85,6 +89,7 @@ class LoginComponent extends Component {
                 </div>
                 <FooterComponentList/>
             </div>
+            </>
         )
     }
 }

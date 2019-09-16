@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Table from 'react-bootstrap/Table';
 import RoleDataService from '../services/RoleDataService.js';
 import FooterComponentList from './FooterComponentList.jsx';
+import HeaderComponent from '../views/HeaderComponent.jsx';
 
 class ListRoleComponent extends Component {
     constructor(props) {
@@ -51,6 +52,7 @@ class ListRoleComponent extends Component {
     render() {
         return(
             <div>
+                <HeaderComponent/>
                 <h3>List Role</h3>
                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
                 <div className="container">

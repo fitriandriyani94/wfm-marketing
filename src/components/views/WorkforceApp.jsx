@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {HashRouter, Route, Switch} from 'react-router-dom';
 import AuthenticatedRoute from '../services/AuthenticatedRoute.jsx';
 import LoginComponent from '../views/LoginComponent.jsx';
-import HeaderComponent from '../views/HeaderComponent.jsx';
 import WelcomeComponent from '../views/WelcomeComponent.jsx';
 import ErrorComponent from '../views/ErrorComponent.jsx';
 import LogoutComponent from '../views/LogoutComponent.jsx';
@@ -24,7 +23,6 @@ class WorkforceApp extends Component {
             <div className="TodoApp">
                 <HashRouter basename="/">
                     <>
-                        <HeaderComponent/>
                         <Switch>
                             <Route path="/" exact component={LoginComponent}/>
                             <Route path="/login" component={LoginComponent}/>

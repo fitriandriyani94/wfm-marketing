@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import ShiftDataService from '../services/ShiftDataService.js';
 import FooterComponentList from './FooterComponentList.jsx';
+import HeaderComponent from '../views/HeaderComponent.jsx';
 
 class ShiftComponent extends Component {
     constructor(props) {
@@ -76,12 +77,14 @@ class ShiftComponent extends Component {
 
         return (
             <div>
-                <h1>Shift</h1>
+                <HeaderComponent/>
+                <h4>New Shift Form</h4>
+                <hr/>
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-1">
+                        <div className="col-md-3">
                         </div>
-                        <div className="col-md-10">
+                        <div className="col-md-6">
                             <Formik 
                                 initialValues={{shiftCode, shiftName, startTime, endTime}}
                                 onSubmit={this.onSubmit}
@@ -117,7 +120,7 @@ class ShiftComponent extends Component {
                                 }
                             </Formik>
                         </div>
-                        <div className="col-md-1">
+                        <div className="col-md-3">
                         </div>
                     </div>                    
                 </div>

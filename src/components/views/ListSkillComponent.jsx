@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Table from 'react-bootstrap/Table';
 import SkillDataService from '../services/SkillDataService.js';
 import FooterComponentList from './FooterComponentList.jsx';
+import HeaderComponent from '../views/HeaderComponent.jsx';
 
 class ListSkillComponent extends Component {
     constructor(props) {
@@ -51,6 +52,7 @@ class ListSkillComponent extends Component {
     render() {
         return(
             <div>
+                <HeaderComponent/>
                 <h3>List Skill</h3>
                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
                 <div className="container">
