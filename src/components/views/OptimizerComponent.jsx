@@ -4,53 +4,66 @@ import 'react-calendar-timeline/lib/Timeline.css';
 import moment from 'moment'
 import FooterComponentList from './FooterComponentList.jsx';
 import HeaderComponent from '../views/HeaderComponent.jsx';
+import AuthenticationService from '../services/AuthenticationService.js';
+import EmployeeDataService from '../services/EmployeeDataService.js';
+import OptimizerService from '../services/OptimizerService.js';
 
 class OptimizerComponent extends Component {
-    render() {
-        const groups = [
-            {id: 1, title: 'Dedi Cahyadi'}, 
-            {id: 2, title: 'Nurrahma Oktaviani'},
-            {id: 3, title: 'Yang Mi Ovelien'},
-            {id: 4, title: 'Yunita Wulansari'}
-        ]
+    constructor(props) {
+        super(props)
+        this.state = {
+            apigroup: [],
+            apijob: [],
+            jobs:[]
+        }
+        this.optimizerClicked = this.optimizerClicked.bind(this);
+        this.refreshActiveEmployees = this.refreshActiveEmployees.bind(this);
+        this.refreshActiveJobs = this.refreshActiveJobs.bind(this);
+    }
 
-        const items = [
-            {
-              id: 1,
-              group: 1,
-              title: 'Stand By',
-              start_time: moment(),
-              end_time: moment().add(1, 'hour')
-            },
-            {
-              id: 2,
-              group: 2,
-              title: 'Stand By',
-              start_time: moment().add(-0.5, 'hour'),
-              end_time: moment().add(0.5, 'hour')
-            },
-            {
-              id: 3,
-              group: 1,
-              title: 'Promosi',
-              start_time: moment().add(2, 'hour'),
-              end_time: moment().add(3, 'hour')
-            },
-            {
-                id: 4,
-                group: 3,
-                title: 'Follow Up',
-                start_time: moment().add(2, 'hour'),
-                end_time: moment().add(3, 'hour')
-            },
-            {
-                id: 5,
-                group: 4,
-                title: 'Follow Up',
-                start_time: moment().add(2, 'hour'),
-                end_time: moment().add(3, 'hour')
+    componentDidMount() {
+        this.refreshActiveEmployees();
+        this.refreshActiveJobs();        
+    }
+
+    refreshActiveEmployees() {
+        EmployeeDataService.retrieveAllActiveEmployees()
+        .then(
+            response => {
+                this.setState({apigroup: response.data})
             }
-          ]
+        )
+    }
+
+    refreshActiveJobs() {
+        OptimizerService.getOptimizer()
+        .then(
+            response => {
+                this.setState({jobs:response.data})
+            }
+        )
+    }
+
+    optimizerClicked() {
+        this.state.jobs.map (
+            job => {
+                const item = {
+                    id: job.id,
+                    group: job.group,
+                    title: job.title,
+                    start_time: moment(job.startTime, "YYYY-MM-DD HH:mm"),
+                    end_time: moment(job.endTime, "YYYY-MM-DD HH:mm")
+                }
+                this.setState(previousState => ({
+                    apijob: [...previousState.apijob, item]
+                }))
+            }
+        )
+        console.log("Finish!");
+    }
+
+    render() {
+        const isAdminLoggedIn = AuthenticationService.isAdminLoggedIn();
 
         return (
             <div>
@@ -58,11 +71,15 @@ class OptimizerComponent extends Component {
                 <div className="container">
                     <h3>Employee Scheduling</h3>
                     <Timeline
-                        groups={groups}
-                        items={items}
+                        groups={this.state.apigroup}
+                        items={this.state.apijob}
                         defaultTimeStart={moment().add(-12, 'hour')}
                         defaultTimeEnd={moment().add(12, 'hour')}
-                    />        
+                    />
+                    <br/>
+                    {isAdminLoggedIn && <button className="btn btn-md btn-success" onClick={this.optimizerClicked}>
+                        Optimize
+                    </button>}                      
                 </div>
                 <FooterComponentList/>
             </div>

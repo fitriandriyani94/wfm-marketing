@@ -1,6 +1,7 @@
 class AuthenticationService {
-    registerSuccessfulLogin(username, password) {
+    registerSuccessfulLogin(username, password, role) {
         sessionStorage.setItem('authenticatedUser', username);
+        sessionStorage.setItem('authenticatedRole', role);
     }
 
     logout() {
@@ -11,6 +12,13 @@ class AuthenticationService {
         let user = sessionStorage.getItem('authenticatedUser')
         if(user === null) return false
         return true
+    }
+
+    isAdminLoggedIn() {
+        let role = sessionStorage.getItem('authenticatedRole')
+        let user = sessionStorage.getItem('authenticatedUser')
+        if(role === "KBG" && user !== null) return true
+        return false
     }
 
     getLoggedInUserName() {

@@ -5,6 +5,7 @@ import AuthenticationService from '../services/AuthenticationService.js';
 class HeaderComponent extends Component {
     render() {
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
+        const isAdminLoggedIn = AuthenticationService.isAdminLoggedIn();
         const getUserLoggedIn = AuthenticationService.getLoggedInUserName();
 
         return(
@@ -13,11 +14,12 @@ class HeaderComponent extends Component {
                     <div><a href="https://raharja.ac.id/" className="navbar-brand">Workforce Management</a></div>
                     <ul className="navbar-nav"> 
                         {isUserLoggedIn && <li><Link className="nav-link" to={"/welcome/" + getUserLoggedIn}>Home</Link></li>}
-                        {isUserLoggedIn && <li><Link className="nav-link" to="/employees">Employee</Link></li>}
-                        {isUserLoggedIn && <li><Link className="nav-link" to="/roles">Role</Link></li>}
-                        {isUserLoggedIn && <li><Link className="nav-link" to="/jobs">Job</Link></li>}
-                        {isUserLoggedIn && <li><Link className="nav-link" to="/shifts">Shift</Link></li>}
-                        {isUserLoggedIn && <li><Link className="nav-link" to="/skills">Skill</Link></li>}
+                        {isAdminLoggedIn && <li><Link className="nav-link" to="/employees">Employee</Link></li>}
+                        {isAdminLoggedIn && <li><Link className="nav-link" to="/employeeSkills">Employee Skill</Link></li>}
+                        {isAdminLoggedIn && <li><Link className="nav-link" to="/roles">Role</Link></li>}
+                        {isAdminLoggedIn && <li><Link className="nav-link" to="/jobs">Job</Link></li>}
+                        {isAdminLoggedIn && <li><Link className="nav-link" to="/shifts">Shift</Link></li>}
+                        {isAdminLoggedIn && <li><Link className="nav-link" to="/skills">Skill</Link></li>}
                         {isUserLoggedIn && <li><Link className="nav-link" to="/optimizer">Optimizer</Link></li>}
                     </ul>
                     <ul className="navbar-nav navbar-collapse justify-content-end">

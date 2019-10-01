@@ -2,11 +2,30 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
-import FooterComponentList from '../views/FooterComponentList.jsx';
+import FooterComponent from './FooterComponent.jsx';
 import HeaderComponent from '../views/HeaderComponent.jsx';
+import ReactMinimalPieChart from 'react-minimal-pie-chart';
+import LineChart from 'react-linechart';
+import '../../../node_modules/react-linechart/dist/styles.css';
 
 class WelcomeComponent extends Component {
     render() {
+
+        const data = [
+            {          									
+                color: "steelblue", 
+                points: [
+                    {x: 1, y: 1}, 
+                    {x: 2, y: 2}, 
+                    {x: 3, y: 3},
+                    {x: 4, y: 4}, 
+                    {x: 5, y: 5}, 
+                    {x: 6, y: 6},
+                    {x: 7, y: 7} 
+                ] 
+            }
+        ];
+
         return(
             <>
                 <HeaderComponent/>
@@ -22,7 +41,49 @@ class WelcomeComponent extends Component {
                         <Button variant="primary">Learn more</Button>
                     </p>
                 </Jumbotron>
-                <FooterComponentList/>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-6">
+                            <ReactMinimalPieChart
+                                data={[
+                                    {
+                                        title: 'Maximum Job',
+                                        value: 10,
+                                        color: '#3232A8'
+                                    },
+                                    {
+                                        title: 'Minimum Job',
+                                        value: 5,
+                                        color: '#3298A8'
+                                    }
+                                ]}
+                                animate
+                                style={{height: '200px'}}
+                                label
+                                labelStyle={{
+                                    fontSize: '7px',
+                                    fontFamily: 'sans-serif',
+                                    fill: '#121212'
+                                }}
+                                radius={42}
+                                labelPosition={112}
+                            />
+                        </div>
+                        <div className="col-md-6">
+                            <LineChart 
+                                width={600}
+                                height={400}
+                                showLegends
+                                legendPosition="top-right"
+                                data={data}
+                                xLabel="Job Count"
+                                yLabel="Employee"
+                            />
+                        </div>
+                    </div>
+                </div>                
+                <hr/>
+                <FooterComponent/>
             </>
         )
     }

@@ -15,6 +15,8 @@ import ListSkillComponent from '../views/ListSkillComponent.jsx';
 import SkillComponent from '../views/SkillComponent.jsx';
 import ListRoleComponent from '../views/ListRoleComponent.jsx';
 import RoleComponent from '../views/RoleComponent.jsx';
+import ListEmployeeSkillComponent from '../views/ListEmployeeSkillComponent.jsx';
+import EmployeeSkillComponent from '../views/EmployeeSkillComponent.jsx';
 import OptimizerComponent from '../views/OptimizerComponent.jsx';
 
 class WorkforceApp extends Component {
@@ -29,6 +31,8 @@ class WorkforceApp extends Component {
                             <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent}/>
                             <AuthenticatedRoute path="/employees" component={ListEmployeeComponent}/>
                             <AuthenticatedRoute path="/employee/:id" component={EmployeeComponent}/>
+                            <AuthenticatedRoute path="/employeeSkills" component={ListEmployeeSkillComponent}/>
+                            <AuthenticatedRoute path="/employeeSkill/:id" component={EmployeeSkillComponent}/>
                             <AuthenticatedRoute path="/jobs" component={ListJobComponent}/>
                             <AuthenticatedRoute path="/job/:id" component={JobComponent}/>
                             <AuthenticatedRoute path="/roles" component={ListRoleComponent}/>

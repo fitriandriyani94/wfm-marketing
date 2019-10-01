@@ -78,7 +78,7 @@ class JobComponent extends Component {
                 classCount:values.classCount,
                 startTime:values.startTime,
                 endTime:values.endTime,
-                employeeId:"0"
+                employeeId:values.employeeId
             }).then(() => this.props.history.push('/jobs'))
         } else {
             console.log("Update")
@@ -92,7 +92,7 @@ class JobComponent extends Component {
                 classCount:values.classCount,
                 startTime:values.startTime,
                 endTime:values.endTime,
-                employeeId:"0"
+                employeeId:values.employeeId
             }).then(() => this.props.history.push('/jobs'))
         }
     }

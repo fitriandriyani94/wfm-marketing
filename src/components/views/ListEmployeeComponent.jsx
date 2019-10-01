@@ -64,7 +64,7 @@ class ListEmployeeComponent extends Component {
                                 <th>Username</th>
                                 <th>Address</th>
                                 <th>Email</th>
-                                <th>Join Date</th>
+                                <th>Role</th>
                                 <th>Status</th>
                                 <th>Update</th>
                                 <th>Delete</th>
@@ -80,7 +80,7 @@ class ListEmployeeComponent extends Component {
                                         <td>{employee.username}</td>
                                         <td>{employee.address}</td>
                                         <td>{employee.email}</td>
-                                        <td>{employee.joinDate}</td>
+                                        <td>{employee.roleCode.roleName}</td>
                                         <td>{employee.employeeStatus}</td>
                                         <td><button className="btn btn-sm btn-info" onClick={() => this.updateEmployeeClicked(employee.employeeId)}>Update</button></td>
                                         <td><button className="btn btn-sm btn-danger" onClick={() => this.deleteEmployeeClicked(employee.employeeId, employee.name)}>Delete</button></td>

@@ -1,25 +1,22 @@
 import axios from 'axios';
 
 const HOST_API = 'https://workforce-app.herokuapp.com';
-const SERVICE_API = `${HOST_API}/employees`;
+const SERVICE_API = `${HOST_API}/employeeSkills`;
 
 class EmployeeDataService {
-    retrieveAllEmployees(name) {
+    retrieveAllEmployeeSkills(name) {
         return axios.get(`${SERVICE_API}/list`,);
     }
-    retrieveAllActiveEmployees() {
-        return axios.get(`${SERVICE_API}/list/active`,);
-    }
-    deleteEmployee(id) {
+    deleteEmployeeSkill(id) {
         return axios.delete(`${SERVICE_API}/${id}`);
     }
-    retrieveEmployee(id) {
+    retrieveEmployeeSkill(id) {
         return axios.get(`${SERVICE_API}/${id}`);
     }
-    updateEmployee(id, todo) {
+    updateEmployeeSkill(id, todo) {
         return axios.put(`${SERVICE_API}/${id}`, todo);
     }
-    createEmployee(todo) {
+    createEmployeeSkill(todo) {
         return axios.post(`${SERVICE_API}`, todo);
     }
 }

@@ -87,7 +87,8 @@ class EmployeeComponent extends Component {
                 email:values.email,
                 joinDate:values.joinDate,
                 resignationDate:'',
-                employeeStatus:values.employeeStatus
+                employeeStatus:values.employeeStatus,
+                roleCode:values.roleCode
             }).then(() => this.props.history.push('/employees'))
         } else {
             console.log("Update")
@@ -104,13 +105,14 @@ class EmployeeComponent extends Component {
                 email:values.email,
                 joinDate:values.joinDate,
                 resignationDate:'',
-                employeeStatus:values.employeeStatus
+                employeeStatus:values.employeeStatus,
+                roleCode:values.roleCode
             }).then(() => this.props.history.push('/employees'))
         }
     }
 
     render() {
-        let {employeeId, name, username, password, birthPlace, birthDate, address, gender, phoneNumber, email, joinDate, resignationDate, employeeStatus} = this.state
+        let {employeeId, name, username, password, birthPlace, birthDate, address, gender, phoneNumber, email, joinDate, resignationDate, employeeStatus, roleCode} = this.state
 
         return (
             <div>
@@ -123,7 +125,7 @@ class EmployeeComponent extends Component {
                         </div>
                         <div className="col-md-10">
                             <Formik 
-                                initialValues={{employeeId, name, username, password, birthPlace, birthDate, address, gender, phoneNumber, email, joinDate, resignationDate, employeeStatus}}
+                                initialValues={{employeeId, name, username, password, birthPlace, birthDate, address, gender, phoneNumber, email, joinDate, resignationDate, employeeStatus, roleCode}}
                                 onSubmit={this.onSubmit}
                                 validateOnChange={false}
                                 validateOnBlur={false}
@@ -190,6 +192,10 @@ class EmployeeComponent extends Component {
                                                     <fieldset className="form-group">
                                                         <label>Employee Status</label>
                                                         <Field className="form-control" type="text" name="employeeStatus"/>
+                                                    </fieldset>
+                                                    <fieldset className="form-group">
+                                                        <label>Role</label>
+                                                        <Field className="form-control" type="text" name="roleCode"/>
                                                     </fieldset>
                                                 </div>                                                
                                             </div>                                            

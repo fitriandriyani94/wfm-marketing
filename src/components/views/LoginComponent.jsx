@@ -11,6 +11,7 @@ class LoginComponent extends Component {
         this.state = {
             email: '',
             password: '',
+            role:'',
             hasLoginFailed: false,
             showSuccessMessage: false
         }
@@ -30,12 +31,12 @@ class LoginComponent extends Component {
         .then((resp) => {
             console.log("Success Login: " + resp.data[1])
             if(resp.data[0]) {
-                AuthenticationService.registerSuccessfulLogin(resp.data[1], this.state.password);
+                AuthenticationService.registerSuccessfulLogin(resp.data[1], this.state.password, resp.data[2]);
                 this.props.history.push(`welcome/${resp.data[1]}`)
             } else {
                 if(this.state.email === "fitri.andriyani" && this.state.password === "keepsecret") {
                     console.log("Success Login Admin")
-                    AuthenticationService.registerSuccessfulLogin(this.state.email, this.state.password);
+                    AuthenticationService.registerSuccessfulLogin(this.state.email, this.state.password, "KBG");
                     this.props.history.push(`welcome/${this.state.email}`)
                 } else {
                     console.log("Failed Login")
@@ -48,7 +49,7 @@ class LoginComponent extends Component {
             console.log("Catch Success Login")
             if(this.state.email === "fitri.andriyani" && this.state.password === "keepsecret") {
                 console.log("Success Login Admin")
-                AuthenticationService.registerSuccessfulLogin(this.state.email, this.state.password);
+                AuthenticationService.registerSuccessfulLogin(this.state.email, this.state.password, "KBG");
                 this.props.history.push(`welcome/${this.state.email}`)
             } else {
                 console.log("Failed Login")
