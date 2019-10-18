@@ -60,10 +60,9 @@ class ListJobComponent extends Component {
                         <thead>
                             <tr>
                                 <th>Job Code</th>
-                                <th>Job Name</th>
+                                <th>Job Description</th>
                                 <th>Shift</th>
                                 <th>Activity Date</th>
-                                <th>Activity Name</th>
                                 <th>Start</th>
                                 <th>End</th>
                                 <th>Update</th>
@@ -76,14 +75,13 @@ class ListJobComponent extends Component {
                                     job => 
                                     <tr key={job.jobCode}>
                                         <td>{job.jobCode}</td>
-                                        <td>{job.jobName}</td>
+                                        <td>{job.jobDescription}</td>
                                         <td>{job.shiftCode}</td>
                                         <td>{job.activityDate}</td>
-                                        <td>{job.activityName}</td>
                                         <td>{job.startTime}</td>
                                         <td>{job.endTime}</td>
                                         <td><button className="btn btn-sm btn-info" onClick={() => this.updateJobClicked(job.jobCode)}>Update</button></td>
-                                        <td><button className="btn btn-sm btn-danger" onClick={() => this.deleteJobClicked(job.jobCode, job.jobName)}>Delete</button></td>
+                                        <td><button className="btn btn-sm btn-danger" onClick={() => this.deleteJobClicked(job.jobCode, job.jobCode)}>Delete</button></td>
                                     </tr>
                                 )
                             }                        

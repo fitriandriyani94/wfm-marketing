@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Table from 'react-bootstrap/Table';
 import EmployeeSkillService from '../services/EmployeeSkillService.js';
-import FooterComponent from './FooterComponent.jsx';
+import FooterComponentList from './FooterComponentList.jsx';
 import HeaderComponent from '../views/HeaderComponent.jsx';
 
 class ListEmployeeComponent extends Component {
@@ -82,7 +82,7 @@ class ListEmployeeComponent extends Component {
                         <button className="btn btn-info" onClick={() => this.addEmployeeSkillClicked()}>Add</button>
                     </div>
                 </div>
-                <FooterComponent/>
+                <FooterComponentList/>
             </div>
         )
     }

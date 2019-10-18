@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import JobDataService from '../services/JobDataService.js';
-import FooterComponent from './FooterComponent.jsx';
+import FooterComponentList from './FooterComponentList.jsx';
 import HeaderComponent from '../views/HeaderComponent.jsx';
 
 class JobComponent extends Component {
@@ -11,10 +11,9 @@ class JobComponent extends Component {
         this.state = {
             id: this.props.match.params.id,
             jobCode: '',
-            jobName: '',
+            jobDescription: '',
             shiftCode: '',
             activityDate: '',
-            activityName: '',
             instance: '',
             classCount: '',
             startTime: '',
@@ -34,10 +33,9 @@ class JobComponent extends Component {
         JobDataService.retrieveJob(this.state.id)
         .then(response => this.setState({
             jobCode:response.data.jobCode,
-            jobName:response.data.jobName,
+            jobDescription:response.data.jobDescription,
             shiftCode:response.data.shiftCode,
             activityDate:moment(response.data.activityDate).format('YYYY-MM-DD'),
-            activityName:response.data.activityName,
             instance:response.data.instance,
             classCount:response.data.classCount,
             startTime:response.data.startTime,
@@ -49,10 +47,10 @@ class JobComponent extends Component {
     validate(values) {
         let errors = {}
         
-        if(!values.jobName) {
-            errors.jobName = 'Enter a job name'           
-        } else if(values.jobName.length < 4) {
-            errors.jobName = 'Enter at least 4 characters for job name'
+        if(!values.jobDescription) {
+            errors.jobDescription = 'Enter a job description'           
+        } else if(values.jobDescription.length < 7) {
+            errors.jobDescription = 'Enter at least 7 characters for job description'
         }
 
         if(!values.jobCode) {
@@ -70,10 +68,9 @@ class JobComponent extends Component {
             console.log("Create")
             JobDataService.createJob({
                 jobCode:values.jobCode,
-                jobName:values.jobName,
+                jobDescription:values.jobDescription,
                 shiftCode:values.shiftCode,
                 activityDate:values.activityDate,
-                activityName:values.activityName,
                 instance:values.instance,
                 classCount:values.classCount,
                 startTime:values.startTime,
@@ -84,10 +81,9 @@ class JobComponent extends Component {
             console.log("Update")
             JobDataService.updateJob(this.state.id, {
                 jobCode:values.jobCode,
-                jobName:values.jobName,
+                jobDescription:values.jobDescription,
                 shiftCode:values.shiftCode,
                 activityDate:values.activityDate,
-                activityName:values.activityName,
                 instance:values.instance,
                 classCount:values.classCount,
                 startTime:values.startTime,
@@ -98,7 +94,7 @@ class JobComponent extends Component {
     }
 
     render() {
-        let {jobCode, jobName, shiftCode, activityDate, activityName, instance, classCount, startTime, endTime, employeeId} = this.state
+        let {jobCode, jobDescription, shiftCode, activityDate, instance, classCount, startTime, endTime, employeeId} = this.state
 
         return (
             <div>
@@ -110,7 +106,7 @@ class JobComponent extends Component {
                         </div>
                         <div className="col-md-10">
                             <Formik 
-                                initialValues={{jobCode, jobName, shiftCode, activityDate, activityName, instance, classCount, startTime, endTime, employeeId}}
+                                initialValues={{jobCode, jobDescription, shiftCode, activityDate, instance, classCount, startTime, endTime, employeeId}}
                                 onSubmit={this.onSubmit}
                                 validateOnChange={false}
                                 validateOnBlur={false}
@@ -120,7 +116,7 @@ class JobComponent extends Component {
                                 {
                                     (props) => (
                                         <Form>
-                                            <ErrorMessage name="jobName" component="div" className="alert alert-warning"/>                                            
+                                            <ErrorMessage name="jobDescription" component="div" className="alert alert-warning"/>                                            
                                             <ErrorMessage name="jobCode" component="div" className="alert alert-warning"/>
                                             <div className="row">
                                                 <div className="col-md-6">
@@ -129,8 +125,8 @@ class JobComponent extends Component {
                                                         <Field className="form-control" type="text" name="jobCode"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>Job Name</label>
-                                                        <Field className="form-control" type="text" name="jobName"/>
+                                                        <label>Job Description</label>
+                                                        <Field className="form-control" type="text" name="jobDescription"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
                                                         <label>Shift Code</label>
@@ -139,10 +135,6 @@ class JobComponent extends Component {
                                                     <fieldset className="form-group">
                                                         <label>Activity Date</label>
                                                         <Field className="form-control" type="date" name="activityDate"/>
-                                                    </fieldset>
-                                                    <fieldset className="form-group">
-                                                        <label>Activity Name</label>
-                                                        <Field className="form-control" type="text" name="activityName"/>
                                                     </fieldset>
                                                 </div>
                                                 <div className="col-md-6">
@@ -175,7 +167,7 @@ class JobComponent extends Component {
                     </div>                    
                 </div>
                 <br/>
-                <FooterComponent/>
+                <FooterComponentList/>
             </div>
         )
     }
