@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import Timeline from 'react-calendar-timeline';
 import 'react-calendar-timeline/lib/Timeline.css';
 import moment from 'moment'
-import FooterComponentList from './FooterComponentList.jsx';
+import FooterComponent from './FooterComponent.jsx';
 import HeaderComponent from '../views/HeaderComponent.jsx';
 import AuthenticationService from '../services/AuthenticationService.js';
 import EmployeeDataService from '../services/EmployeeDataService.js';
 import OptimizerService from '../services/OptimizerService.js';
+import Table from 'react-bootstrap/Table';
 
 class OptimizerComponent extends Component {
     constructor(props) {
@@ -14,16 +15,19 @@ class OptimizerComponent extends Component {
         this.state = {
             apigroup: [],
             apijob: [],
-            jobs:[]
+            jobs:[],
+            jobCount: [],
         }
         this.optimizerClicked = this.optimizerClicked.bind(this);
         this.refreshActiveEmployees = this.refreshActiveEmployees.bind(this);
         this.refreshActiveJobs = this.refreshActiveJobs.bind(this);
+        this.refreshJobCount = this.refreshJobCount.bind(this);
     }
 
     componentDidMount() {
         this.refreshActiveEmployees();
-        this.refreshActiveJobs();        
+        this.refreshActiveJobs(); 
+        this.refreshJobCount();       
     }
 
     refreshActiveEmployees() {
@@ -40,6 +44,15 @@ class OptimizerComponent extends Component {
         .then(
             response => {
                 this.setState({jobs:response.data})
+            }
+        )
+    }
+
+    refreshJobCount() {
+        OptimizerService.getJobCount()
+        .then(
+            response => {
+                this.setState({jobCount:response.data})
             }
         )
     }
@@ -79,9 +92,28 @@ class OptimizerComponent extends Component {
                     <br/>
                     {isAdminLoggedIn && <button className="btn btn-md btn-success" onClick={this.optimizerClicked}>
                         Optimize
-                    </button>}                      
+                    </button>}
+                    <Table bordered striped hover size="sm">
+                        <thead>
+                            <tr>
+                                <th>Employee Name</th>
+                                <th>Total Assignment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                this.state.jobCount.map (
+                                    jobCount => 
+                                    <tr key={jobCount.employeeName}>
+                                        <td>{jobCount.employeeName}</td>
+                                        <td>{jobCount.jobCount}</td>
+                                    </tr>
+                                )
+                            }                        
+                        </tbody>
+                    </Table>                      
                 </div>
-                <FooterComponentList/>
+                <FooterComponent/>
             </div>
         )
     }

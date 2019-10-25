@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 import FooterComponent from './FooterComponent.jsx';
 import HeaderComponent from '../views/HeaderComponent.jsx';
 import ReactMinimalPieChart from 'react-minimal-pie-chart';
+import LineChart from 'react-linechart';
+import '../../../node_modules/react-linechart/dist/styles.css';
 
 class WelcomeComponent extends Component {
     render() {
@@ -65,6 +67,17 @@ class WelcomeComponent extends Component {
                                 }}
                                 radius={42}
                                 labelPosition={112}
+                            />
+                        </div>
+                        <div className="col-md-6">
+                            <LineChart 
+                                width={600}
+                                height={400}
+                                showLegends
+                                legendPosition="top-right"
+                                data={data}
+                                xLabel="Job Count"
+                                yLabel="Employee"
                             />
                         </div>
                     </div>

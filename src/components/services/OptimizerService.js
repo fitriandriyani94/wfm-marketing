@@ -7,6 +7,10 @@ class OptimizerService {
     getOptimizer() {
         return axios.get(`${SERVICE_API}/optimizer`);
     }
+
+    getJobCount() {
+        return axios.get(`${SERVICE_API}/job-count`);
+    }
 }
 
 export default new OptimizerService();
