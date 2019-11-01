@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5e0f41c95ba59604a49881bb03c3b332",
+    "revision": "5c2531a9caaede5401aebda0298e30c7",
     "url": "/wfm-marketing/index.html"
   },
   {
-    "revision": "4bce027ad804231785cb",
+    "revision": "cddc67f6848f6d18545e",
     "url": "/wfm-marketing/static/css/2.ee615ac2.chunk.css"
   },
   {
-    "revision": "7d44f12fa3f0809d9368",
+    "revision": "d509c520ada53b56628f",
     "url": "/wfm-marketing/static/css/main.21e59563.chunk.css"
   },
   {
-    "revision": "4bce027ad804231785cb",
-    "url": "/wfm-marketing/static/js/2.cdfc0cee.chunk.js"
+    "revision": "cddc67f6848f6d18545e",
+    "url": "/wfm-marketing/static/js/2.6d608b73.chunk.js"
   },
   {
-    "revision": "7d44f12fa3f0809d9368",
-    "url": "/wfm-marketing/static/js/main.f7919556.chunk.js"
+    "revision": "d509c520ada53b56628f",
+    "url": "/wfm-marketing/static/js/main.2ca8b7b0.chunk.js"
   },
   {
     "revision": "bd94ade94de3b3bae879",
