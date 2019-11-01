@@ -4,26 +4,61 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
 import FooterComponent from './FooterComponent.jsx';
 import HeaderComponent from '../views/HeaderComponent.jsx';
-import ReactMinimalPieChart from 'react-minimal-pie-chart';
+import Chart from "react-apexcharts";
+import OptimizerService from '../services/OptimizerService.js';
 
 class WelcomeComponent extends Component {
-    render() {
-
-        const data = [
-            {          									
-                color: "steelblue", 
-                points: [
-                    {x: 1, y: 1}, 
-                    {x: 2, y: 2}, 
-                    {x: 3, y: 3},
-                    {x: 4, y: 4}, 
-                    {x: 5, y: 5}, 
-                    {x: 6, y: 6},
-                    {x: 7, y: 7} 
-                ] 
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            pieoptions: {
+                chart: {
+                    id: "basic-line"
+                },
+                xaxis: {
+                    categories: ["Dede", "Yang Mi", "Nurrahma", "Yunita", "Ayu", "Vena", "Nasya"]
+                }
+            },
+            pieseries: [
+                {
+                    name: "series",
+                    data: [45, 50, 49, 60, 70, 91, 50]
+                }
+            ],
+            series: [],
+            chartOptions: {
+                labels: ['Follow Up', 'Promosi', 'Stand By']
             }
-        ];
+        }
+        this.refreshJobCategoryCount = this.refreshJobCategoryCount.bind(this);
+        this.refreshJobEmployeeCount = this.refreshJobEmployeeCount.bind(this);
+    }
 
+    componentDidMount() {
+        this.refreshJobCategoryCount();
+        this.refreshJobEmployeeCount(); 
+    }
+
+    refreshJobCategoryCount() {
+        OptimizerService.getJobCategoryCount()
+        .then(
+            response => {
+                this.setState({series:response.data})
+            }
+        )
+    }
+
+    refreshJobEmployeeCount() {
+        OptimizerService.getJobEmployeeCount()
+        .then(
+            response => {
+                this.setState({pieseries:response.data})
+            }
+        )
+    }
+
+    render() {
         return(
             <>
                 <HeaderComponent/>
@@ -35,36 +70,18 @@ class WelcomeComponent extends Component {
                     <p>
                         You can manage job for your employees <Link to="/jobs">here</Link>.
                     </p>
-                    <p>
-                        <Button variant="primary">Learn more</Button>
-                    </p>
                 </Jumbotron>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6">
-                            <ReactMinimalPieChart
-                                data={[
-                                    {
-                                        title: 'Maximum Job',
-                                        value: 10,
-                                        color: '#3232A8'
-                                    },
-                                    {
-                                        title: 'Minimum Job',
-                                        value: 5,
-                                        color: '#3298A8'
-                                    }
-                                ]}
-                                animate
-                                style={{height: '200px'}}
-                                label
-                                labelStyle={{
-                                    fontSize: '7px',
-                                    fontFamily: 'sans-serif',
-                                    fill: '#121212'
-                                }}
-                                radius={42}
-                                labelPosition={112}
+                            <Chart options={this.state.chartOptions} series={this.state.series} type="pie" width="400" />
+                        </div>
+                        <div className="col-md-6">
+                            <Chart
+                                options={this.state.pieoptions}
+                                series={this.state.pieseries}
+                                type="line"
+                                width="500"
                             />
                         </div>
                     </div>

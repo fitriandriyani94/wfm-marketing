@@ -11,6 +11,14 @@ class OptimizerService {
     getJobCount() {
         return axios.get(`${SERVICE_API}/job-count`);
     }
+
+    getJobCategoryCount() {
+        return axios.get(`${SERVICE_API}/job-category-count`);
+    }
+
+    getJobEmployeeCount() {
+        return axios.get(`${SERVICE_API}/job-employee-count`);
+    }
 }
 
 export default new OptimizerService();
