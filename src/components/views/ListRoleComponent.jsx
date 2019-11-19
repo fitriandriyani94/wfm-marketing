@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
-import Table from 'react-bootstrap/Table';
 import RoleDataService from '../services/RoleDataService.js';
 import FooterComponentList from './FooterComponentList.jsx';
 import HeaderComponent from '../views/HeaderComponent.jsx';
+import DataTable from 'react-data-table-component';
 
 class ListRoleComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
             roles: [],
+            rolesCustom: [],
             message:""
         }
         this.refreshRoles = this.refreshRoles.bind(this);
@@ -23,19 +24,30 @@ class ListRoleComponent extends Component {
 
     refreshRoles() {
         RoleDataService.retrieveAllRoles("name")
-            .then(
-                response => {
-                    this.setState({roles: response.data})
-                }
+            .then(response =>
+                response.data.map(
+                    role => {
+                        const item = {
+                            id: role.roleCode,
+                            roleCode: role.roleCode,
+                            roleName: role.roleName,
+                        }
+                        this.setState(previousState => ({
+                            rolesCustom: [...previousState.rolesCustom, item]
+                        }))
+                    }
+                )
             )
     }
 
     deleteRoleClicked(id, name) {
         RoleDataService.deleteRole(id)
             .then(
+                window.location.reload()                
+            )
+            .then(
                 response => {
-                    this.setState({message: `Delete of role ${name} Successful`})
-                    this.refreshRoles()
+                    this.setState({message: `Keahlian berhasil dihapus`})
                 }
             )
     }
@@ -50,37 +62,47 @@ class ListRoleComponent extends Component {
     }
 
     render() {
+        const columns = [
+            {
+                name: 'Kode Jabatan',
+                selector: 'roleCode',
+                sortable: true,
+            },
+            {
+                name: 'Nama Jabatan',
+                selector: 'roleName',
+                sortable: true,
+                left: true,
+            },
+            {
+                name: 'Ubah',
+                button: true,
+                cell: row => <button className="btn btn-sm btn-info" onClick={() => this.updateRoleClicked(row.id)}>Ubah</button>,
+            },
+            {
+                name: 'Hapus',
+                button: true,
+                cell: row => <button className="btn btn-sm btn-danger" onClick={() => this.deleteRoleClicked(row.id)}>Hapus</button>,
+            },
+        ];
         return(
             <div>
                 <HeaderComponent/>
-                <h3>List Role</h3>
                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
                 <div className="container">
-                    <Table bordered striped hover size="sm">
-                        <thead>
-                            <tr>
-                                <th>Role Code</th>
-                                <th>Role Name</th>
-                                <th>Update</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                this.state.roles.map (
-                                    role => 
-                                    <tr key={role.roleCode}>
-                                        <td>{role.roleCode}</td>
-                                        <td>{role.roleName}</td>
-                                        <td><button className="btn btn-sm btn-info" onClick={() => this.updateRoleClicked(role.roleCode)}>Update</button></td>
-                                        <td><button className="btn btn-sm btn-danger" onClick={() => this.deleteRoleClicked(role.roleCode, role.roleName)}>Delete</button></td>
-                                    </tr>
-                                )
-                            }                        
-                        </tbody>
-                    </Table>
+                <br/>
+                <h5>Daftar Jabatan</h5>
+                <DataTable
+                        columns={columns}
+                        data={this.state.rolesCustom}
+                        pagination
+                        paginationPerPage={5}
+                        paginationRowsPerPageOptions={[5]}
+                        highlightOnHover
+                        pointerOnHover
+                    />
                     <div className="row">
-                        <button className="btn btn-info" onClick={() => this.addRoleClicked()}>Add</button>
+                        <button className="btn btn-sm btn-info" onClick={() => this.addRoleClicked()}>Tambah Jabatan</button>
                     </div>
                 </div>
                 <FooterComponentList/>

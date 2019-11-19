@@ -82,7 +82,8 @@ class OptimizerComponent extends Component {
             <div>
                 <HeaderComponent/>
                 <div className="container">
-                    <h3>Employee Scheduling</h3>
+                    <h3>Penjadwalan Karyawan</h3>
+                    <hr/>
                     <Timeline
                         groups={this.state.apigroup}
                         items={this.state.apijob}
@@ -96,8 +97,8 @@ class OptimizerComponent extends Component {
                     <Table bordered striped hover size="sm">
                         <thead>
                             <tr>
-                                <th>Employee Name</th>
-                                <th>Total Assignment</th>
+                                <th>Nama Karyawan</th>
+                                <th>Total Jumlah Pekerjaan</th>
                             </tr>
                         </thead>
                         <tbody>

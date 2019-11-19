@@ -32,15 +32,15 @@ class SkillComponent extends Component {
         let errors = {}
         
         if(!values.skillCode) {
-            errors.skillCode = 'Enter a skill code'           
+            errors.skillCode = 'Kode keahlian tidak boleh kosong'           
         } else if(values.skillCode.length < 1) {
-            errors.skillCode = 'Enter at least 1 characters for skill code'
+            errors.skillCode = 'Panjang kode keahlian tidak boleh kurang dari satu huruf'
         }
 
         if(!values.skillName) {
-            errors.skillName = 'Enter a skill name'           
-        } else if(values.skillName.length < 4) {
-            errors.skillName = 'Enter at least 4 characters for skill name'
+            errors.skillName = 'Nama keahlian tidak boleh kosong'           
+        } else if(values.skillName.length < 7) {
+            errors.skillName = 'Panjang nama keahlian tidak boleh kurang dari tujuh huruf'
         }
 
         return errors;
@@ -52,13 +52,15 @@ class SkillComponent extends Component {
             console.log("Create")
             SkillDataService.createSkill({
                 skillCode:values.skillCode,
-                skillName:values.skillName
+                skillName:values.skillName,
+                active:"Y"
             }).then(() => this.props.history.push('/skills'))
         } else {
             console.log("Update")
             SkillDataService.updateSkill(this.state.id, {
                 skillCode:values.skillCode,
-                skillName:values.skillName
+                skillName:values.skillName,
+                active:"Y"
             }).then(() => this.props.history.push('/skills'))
         }
     }
@@ -69,7 +71,7 @@ class SkillComponent extends Component {
         return (
             <div>
                 <HeaderComponent/>
-                <h4>New Skill Form</h4>
+                <h4>Form Keahlian Baru</h4>
                 <hr/>
                 <div className="container">
                     <div className="row">
@@ -90,14 +92,14 @@ class SkillComponent extends Component {
                                             <ErrorMessage name="skillCode" component="div" className="alert alert-warning"/>                                            
                                             <ErrorMessage name="skillName" component="div" className="alert alert-warning"/>
                                             <fieldset className="form-group">
-                                                <label>Skill Code</label>
+                                                <label>Kode Keahlian</label>
                                                 <Field className="form-control" type="text" name="skillCode"/>
                                             </fieldset>
                                             <fieldset className="form-group">
-                                                <label>Skill Name</label>
+                                                <label>Nama Keahlian</label>
                                                 <Field className="form-control" type="text" name="skillName"/>
                                             </fieldset>
-                                            <button className="btn btn-success" type="submit">Save</button>
+                                            <button className="btn btn-success" type="submit">Simpan</button>
                                         </Form>
                                     )                        
                                 }

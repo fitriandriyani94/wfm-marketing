@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
-import Table from 'react-bootstrap/Table';
 import SkillDataService from '../services/SkillDataService.js';
 import FooterComponentList from './FooterComponentList.jsx';
 import HeaderComponent from '../views/HeaderComponent.jsx';
+import DataTable from 'react-data-table-component';
 
 class ListSkillComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
             skills: [],
+            skillsCustom: [],
             message:""
         }
         this.refreshSkills = this.refreshSkills.bind(this);
@@ -23,19 +24,30 @@ class ListSkillComponent extends Component {
 
     refreshSkills() {
         SkillDataService.retrieveAllSkills("name")
-            .then(
-                response => {
-                    this.setState({skills: response.data})
-                }
+            .then(response =>
+                response.data.map(
+                    skill => {
+                        const item = {
+                            id: skill.skillCode,
+                            skillCode: skill.skillCode,
+                            skillName: skill.skillName,
+                        }
+                        this.setState(previousState => ({
+                            skillsCustom: [...previousState.skillsCustom, item]
+                        }))
+                    }
+                )
             )
     }
 
     deleteSkillClicked(id, name) {
         SkillDataService.deleteSkill(id)
             .then(
+                window.location.reload()                
+            )
+            .then(
                 response => {
-                    this.setState({message: `Delete of skill ${name} Successful`})
-                    this.refreshSkills()
+                    this.setState({message: `Keahlian berhasil dihapus`})
                 }
             )
     }
@@ -50,37 +62,47 @@ class ListSkillComponent extends Component {
     }
 
     render() {
+        const columns = [
+            {
+                name: 'Kode Keahlian',
+                selector: 'skillCode',
+                sortable: true,
+            },
+            {
+                name: 'Nama Keahlian',
+                selector: 'skillName',
+                sortable: true,
+                left: true,
+            },
+            {
+                name: 'Ubah',
+                button: true,
+                cell: row => <button className="btn btn-sm btn-info" onClick={() => this.updateSkillClicked(row.id)}>Ubah</button>,
+            },
+            {
+                name: 'Hapus',
+                button: true,
+                cell: row => <button className="btn btn-sm btn-danger" onClick={() => this.deleteSkillClicked(row.id)}>Hapus</button>,
+            },
+        ];
         return(
             <div>
                 <HeaderComponent/>
-                <h3>List Skill</h3>
                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
                 <div className="container">
-                    <Table bordered striped hover size="sm">
-                        <thead>
-                            <tr>
-                                <th>Skill Code</th>
-                                <th>Skill Name</th>
-                                <th>Update</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                this.state.skills.map (
-                                    skill => 
-                                    <tr key={skill.skillCode}>
-                                        <td>{skill.skillCode}</td>
-                                        <td>{skill.skillName}</td>
-                                        <td><button className="btn btn-sm btn-info" onClick={() => this.updateSkillClicked(skill.skillCode)}>Update</button></td>
-                                        <td><button className="btn btn-sm btn-danger" onClick={() => this.deleteSkillClicked(skill.skillCode, skill.skillName)}>Delete</button></td>
-                                    </tr>
-                                )
-                            }                        
-                        </tbody>
-                    </Table>
+                    <br/>
+                    <h5>Daftar Keahlian</h5>
+                    <DataTable
+                        columns={columns}
+                        data={this.state.skillsCustom}
+                        pagination
+                        paginationPerPage={5}
+                        paginationRowsPerPageOptions={[5]}
+                        highlightOnHover
+                        pointerOnHover
+                    />
                     <div className="row">
-                        <button className="btn btn-info" onClick={() => this.addSkillClicked()}>Add</button>
+                        <button className="btn btn-sm btn-info" onClick={() => this.addSkillClicked()}>Tambah Keahlian</button>
                     </div>
                 </div>
                 <FooterComponentList/>

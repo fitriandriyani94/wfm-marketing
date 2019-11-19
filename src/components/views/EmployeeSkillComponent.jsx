@@ -32,15 +32,15 @@ class EmployeeSkillComponent extends Component {
         let errors = {}
         
         if(!values.employeeId) {
-            errors.employeeId = 'Enter an employee ID'           
+            errors.employeeId = 'ID Karyawan tidak boleh kosong'           
         } else if(values.employeeId.length < 1) {
-            errors.employeeId = 'Enter at least 1 characters for employee ID'
+            errors.employeeId = 'Panjang ID karyawan tidak boleh kurang dari satu huruf'
         }
 
         if(!values.skillCode) {
-            errors.skiilCode = 'Enter a skill code'           
+            errors.skillCode = 'Kode keahlian tidak boleh kosong'           
         } else if(values.skillCode.length < 1) {
-            errors.skillCode = 'Enter at least 1 characters for skill code'
+            errors.skillCode = 'Panjang kode keahlian tidak boleh kurang dari satu huruf'
         }
 
         return errors;
@@ -52,13 +52,15 @@ class EmployeeSkillComponent extends Component {
             console.log("Create")
             EmployeeSkillService.createEmployeeSkill({
                 employeeId:values.employeeId,
-                skillCode:values.skillCode
+                skillCode:values.skillCode,
+                active:"Y"
             }).then(() => this.props.history.push('/employeeSkills'))
         } else {
             console.log("Update")
             EmployeeSkillService.updateEmployeeSkill(this.state.id, {
                 employeeId:values.employeeId,
-                skillCode:values.skillCode
+                skillCode:values.skillCode,
+                active:"Y"
             }).then(() => this.props.history.push('/employeeSkills'))
         }
     }
@@ -69,7 +71,7 @@ class EmployeeSkillComponent extends Component {
         return (
             <div>
                 <HeaderComponent/>
-                <h4>New Employee Skill Form</h4>
+                <h4>Form Keahlian Karyawan</h4>
                 <hr/>
                 <div className="container">
                     <div className="row">
@@ -90,14 +92,14 @@ class EmployeeSkillComponent extends Component {
                                             <ErrorMessage name="employeeId" component="div" className="alert alert-warning"/>                                            
                                             <ErrorMessage name="skillCode" component="div" className="alert alert-warning"/>
                                             <fieldset className="form-group">
-                                                <label>Employee ID</label>
+                                                <label>ID Karyawan</label>
                                                 <Field className="form-control" type="text" name="employeeId"/>
                                             </fieldset>
                                             <fieldset className="form-group">
-                                                <label>Skill Code</label>
+                                                <label>Kode Keahlian</label>
                                                 <Field className="form-control" type="text" name="skillCode"/>
                                             </fieldset>
-                                            <button className="btn btn-success" type="submit">Save</button>
+                                            <button className="btn btn-success" type="submit">Simpan</button>
                                         </Form>
                                     )                        
                                 }

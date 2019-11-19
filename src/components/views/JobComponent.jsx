@@ -48,15 +48,15 @@ class JobComponent extends Component {
         let errors = {}
         
         if(!values.jobDescription) {
-            errors.jobDescription = 'Enter a job description'           
+            errors.jobDescription = 'Deskripsi pekerjaan tidak boleh kosong'           
         } else if(values.jobDescription.length < 7) {
-            errors.jobDescription = 'Enter at least 7 characters for job description'
+            errors.jobDescription = 'Panjang deskripsi pekerjaan tidak boleh kurang dari tujuh huruf'
         }
 
         if(!values.jobCode) {
-            errors.jobCode = 'Enter a job code'           
+            errors.jobCode = 'Kode pekerjaan tidak boleh kosong'           
         } else if(values.jobCode.length < 1) {
-            errors.jobCode = 'Enter at least 1 characters for job code'
+            errors.jobCode = 'Panjang kode pekerjaan tidak boleh kurang dari satu huruf'
         }
 
         return errors;
@@ -75,7 +75,8 @@ class JobComponent extends Component {
                 classCount:values.classCount,
                 startTime:values.startTime,
                 endTime:values.endTime,
-                employeeId:values.employeeId
+                employeeId:values.employeeId,
+                active:"Y"
             }).then(() => this.props.history.push('/jobs'))
         } else {
             console.log("Update")
@@ -88,7 +89,8 @@ class JobComponent extends Component {
                 classCount:values.classCount,
                 startTime:values.startTime,
                 endTime:values.endTime,
-                employeeId:values.employeeId
+                employeeId:values.employeeId,
+                active:"Y"
             }).then(() => this.props.history.push('/jobs'))
         }
     }
@@ -99,7 +101,7 @@ class JobComponent extends Component {
         return (
             <div>
                 <HeaderComponent/>
-                <h4>New Job Form</h4>
+                <h4>Form Pekerjaan Baru</h4>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-1">
@@ -121,42 +123,42 @@ class JobComponent extends Component {
                                             <div className="row">
                                                 <div className="col-md-6">
                                                     <fieldset className="form-group">
-                                                        <label>Job Code</label>
+                                                        <label>Kode Pekerjaan</label>
                                                         <Field className="form-control" type="text" name="jobCode"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>Job Description</label>
+                                                        <label>Deskripsi Pekerjaan</label>
                                                         <Field className="form-control" type="text" name="jobDescription"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>Shift Code</label>
+                                                        <label>Kode Shift</label>
                                                         <Field className="form-control" type="text" name="shiftCode"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>Activity Date</label>
+                                                        <label>Tanggal</label>
                                                         <Field className="form-control" type="date" name="activityDate"/>
                                                     </fieldset>
                                                 </div>
                                                 <div className="col-md-6">
                                                     <fieldset className="form-group">
-                                                        <label>Instance</label>
+                                                        <label>Instansi</label>
                                                         <Field className="form-control" type="text" name="instance"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>Class Count</label>
+                                                        <label>Jumlah Kelas</label>
                                                         <Field className="form-control" type="text" name="classCount"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>Start Time</label>
+                                                        <label>Jam Mulai</label>
                                                         <Field className="form-control" type="time" name="startTime"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>End Time</label>
+                                                        <label>Jam Selesai</label>
                                                         <Field className="form-control" type="time" name="endTime"/>
                                                     </fieldset>
                                                 </div>
                                             </div>                                                                              
-                                            <button className="btn btn-success" type="submit">Save</button>
+                                            <button className="btn btn-success" type="submit">Simpan</button>
                                         </Form>
                                     )                        
                                 }

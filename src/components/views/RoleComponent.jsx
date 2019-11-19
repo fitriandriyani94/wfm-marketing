@@ -32,15 +32,15 @@ class RoleComponent extends Component {
         let errors = {}
         
         if(!values.roleCode) {
-            errors.roleCode = 'Enter a role code'           
-        } else if(values.roleCode.length < 1) {
-            errors.roleCode = 'Enter at least 1 characters for role code'
+            errors.roleCode = 'Kode jabatan tidak boleh kosong'           
+        } else if(values.roleCode.length < 3) {
+            errors.roleCode = 'Panjang kode jabatan tidak boleh kurang dari tiga huruf'
         }
 
         if(!values.roleName) {
-            errors.roleName = 'Enter a role name'           
-        } else if(values.roleName.length < 4) {
-            errors.roleName = 'Enter at least 4 characters for role name'
+            errors.roleName = 'Nama jabatan tidak boleh kosong'           
+        } else if(values.roleName.length < 5) {
+            errors.roleName = 'Panjang nama jabatan tidak boleh kurang dari lima huruf'
         }
 
         return errors;
@@ -52,13 +52,15 @@ class RoleComponent extends Component {
             console.log("Create")
             RoleDataService.createRole({
                 roleCode:values.roleCode,
-                roleName:values.roleName
+                roleName:values.roleName,
+                active:"Y"
             }).then(() => this.props.history.push('/roles'))
         } else {
             console.log("Update")
             RoleDataService.updateRole(this.state.id, {
                 roleCode:values.roleCode,
-                roleName:values.roleName
+                roleName:values.roleName,
+                active:"Y"
             }).then(() => this.props.history.push('/roles'))
         }
     }
@@ -69,7 +71,7 @@ class RoleComponent extends Component {
         return (
             <div>
                 <HeaderComponent/>
-                <h4>New Role Form</h4>
+                <h4>Form Jabatan Baru</h4>
                 <hr/>
                 <div className="container">
                     <div className="row">
@@ -90,14 +92,14 @@ class RoleComponent extends Component {
                                             <ErrorMessage name="roleCode" component="div" className="alert alert-warning"/>                                            
                                             <ErrorMessage name="roleName" component="div" className="alert alert-warning"/>
                                             <fieldset className="form-group">
-                                                <label>Role Code</label>
+                                                <label>Kode Jabatan</label>
                                                 <Field className="form-control" type="text" name="roleCode"/>
                                             </fieldset>
                                             <fieldset className="form-group">
-                                                <label>Role Name</label>
+                                                <label>Nama Jabatan</label>
                                                 <Field className="form-control" type="text" name="roleName"/>
                                             </fieldset>
-                                            <button className="btn btn-success" type="submit">Save</button>
+                                            <button className="btn btn-success" type="submit">Simpan</button>
                                         </Form>
                                     )                        
                                 }

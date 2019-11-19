@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Table from 'react-bootstrap/Table';
+import DataTable from 'react-data-table-component';
 import JobDataService from '../services/JobDataService.js';
 import FooterComponentList from './FooterComponentList.jsx';
 import HeaderComponent from '../views/HeaderComponent.jsx';
@@ -9,6 +9,7 @@ class ListJobComponent extends Component {
         super(props)
         this.state = {
             jobs: [],
+            jobsCustom: [],
             message:""
         }
         this.refreshJobs = this.refreshJobs.bind(this);
@@ -23,19 +24,34 @@ class ListJobComponent extends Component {
 
     refreshJobs() {
         JobDataService.retrieveAllJobs("name")
-            .then(
-                response => {
-                    this.setState({jobs: response.data})
-                }
+            .then(response =>
+                response.data.map(
+                    job => {
+                        const item = {
+                            id: job.id,
+                            jobCode: job.jobCode,
+                            jobDescription: job.jobDescription,
+                            shiftCode: job.shiftCode,
+                            activityDate: job.activityDate,                            
+                            startTime: job.startTime,
+                            endTime: job.endTime,
+                        }
+                        this.setState(previousState => ({
+                            jobsCustom: [...previousState.jobsCustom, item]
+                        }))
+                    }
+                )
             )
     }
 
     deleteJobClicked(id, name) {
         JobDataService.deleteJob(id)
             .then(
+                window.location.reload()                
+            )
+            .then(
                 response => {
-                    this.setState({message: `Delete of job ${name} Successful`})
-                    this.refreshJobs()
+                    this.setState({message: `Pekerjaan berhasil dihapus`})
                 }
             )
     }
@@ -50,46 +66,70 @@ class ListJobComponent extends Component {
     }
 
     render() {
+        const columns = [
+            {
+                name: 'Kode Pekerjaan',
+                selector: 'jobCode',
+                sortable: true,
+            },
+            {
+                name: 'Deskripsi Pekerjaan',
+                selector: 'jobDescription',
+                sortable: true,
+                left: true,
+            },
+            {
+                name: 'Shift',
+                selector: 'shiftCode',
+                sortable: true,
+            },
+            {
+                name: 'Tanggal',
+                selector: 'activityDate',
+                sortable: true,
+            },
+            {
+                name: 'Jam Mulai',
+                selector: 'startTime',
+                sortable: true,
+                left: true,
+            },
+            {
+                name: 'Jam Selesai',
+                selector: 'endTime',
+                sortable: true,
+                left: true,
+            },
+            {
+                name: 'Ubah',
+                button: true,
+                cell: row => <td><button className="btn btn-sm btn-info" onClick={() => this.updateJobClicked(row.id)}>Ubah</button></td>,
+            },
+            {
+                name: 'Hapus',
+                button: true,
+                cell: row => <button className="btn btn-sm btn-danger" onClick={() => this.deleteJobClicked(row.id)}>Hapus</button>,
+            },
+        ];
         return(
             <div>
                 <HeaderComponent/>
-                <h3>List Job</h3>
                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
                 <div className="container">
-                    <Table bordered striped hover size="sm">
-                        <thead>
-                            <tr>
-                                <th>Job Code</th>
-                                <th>Job Description</th>
-                                <th>Shift</th>
-                                <th>Activity Date</th>
-                                <th>Start</th>
-                                <th>End</th>
-                                <th>Update</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                this.state.jobs.map (
-                                    job => 
-                                    <tr key={job.jobCode}>
-                                        <td>{job.jobCode}</td>
-                                        <td>{job.jobDescription}</td>
-                                        <td>{job.shiftCode}</td>
-                                        <td>{job.activityDate}</td>
-                                        <td>{job.startTime}</td>
-                                        <td>{job.endTime}</td>
-                                        <td><button className="btn btn-sm btn-info" onClick={() => this.updateJobClicked(job.jobCode)}>Update</button></td>
-                                        <td><button className="btn btn-sm btn-danger" onClick={() => this.deleteJobClicked(job.jobCode, job.jobCode)}>Delete</button></td>
-                                    </tr>
-                                )
-                            }                        
-                        </tbody>
-                    </Table>
+                    <br/>
+                    <h5>Daftar Pekerjaan</h5>                    
+                    <DataTable
+                        columns={columns}
+                        data={this.state.jobsCustom}
+                        pagination
+                        paginationPerPage={5}
+                        paginationRowsPerPageOptions={[5]}
+                        highlightOnHover
+                        pointerOnHover
+                    />
                     <div className="row">
-                        <button className="btn btn-info" onClick={() => this.addJobClicked()}>Add</button>
-                    </div>
+                        <button className="btn btn-sm btn-info" onClick={() => this.addJobClicked()}>Tambah Pekerjaan</button>
+                    </div>                    
                 </div>
                 <FooterComponentList/>
             </div>

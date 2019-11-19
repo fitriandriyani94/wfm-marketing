@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Jumbotron from 'react-bootstrap/Jumbotron';
-import Button from 'react-bootstrap/Button';
 import FooterComponent from './FooterComponent.jsx';
 import HeaderComponent from '../views/HeaderComponent.jsx';
 import Chart from "react-apexcharts";
@@ -17,13 +16,35 @@ class WelcomeComponent extends Component {
                     id: "basic-line"
                 },
                 xaxis: {
-                    categories: ["Dede", "Yang Mi", "Nurrahma", "Yunita", "Ayu", "Vena", "Nasya"]
+                    categories: ["1 Nov", "2 Nov", "3 Nov", "4 Nov", "5 Nov", "6 Nov", "7 Nov", "8 Nov", "9 Nov", "10 Nov"]
                 }
             },
             pieseries: [
                 {
-                    name: "series",
-                    data: [45, 50, 49, 60, 70, 91, 50]
+                    name: "FOLLOW UP",
+                    data: [28, 29, 33, 36, 32, 32, 33, 29, 30, 32]
+                  },
+                  {
+                    name: "PROMOTION",
+                    data: [12, 11, 14, 18, 17, 13, 13, 15, 17, 16]
+                  },
+                  {
+                    name: "STAND BY",
+                    data: [20, 19, 22, 24, 20, 23, 25, 27, 25, 22]
+                  }
+            ],
+            pieoptions1: {
+                chart: {
+                    id: "basic-bar"
+                },
+                xaxis: {
+                    categories: ["Dede", "Yang Mi", "Nurrahma", "Yunita", "Ayu", "Vena", "Nasya"]
+                }
+            },
+            pieseries1: [
+                {
+                    name: "FOLLOW UP",
+                    data: [28, 29, 33, 36, 32, 32, 33]
                 }
             ],
             series: [],
@@ -32,12 +53,12 @@ class WelcomeComponent extends Component {
             }
         }
         this.refreshJobCategoryCount = this.refreshJobCategoryCount.bind(this);
-        this.refreshJobEmployeeCount = this.refreshJobEmployeeCount.bind(this);
+        /*this.refreshJobEmployeeCount = this.refreshJobEmployeeCount.bind(this);*/
     }
 
     componentDidMount() {
         this.refreshJobCategoryCount();
-        this.refreshJobEmployeeCount(); 
+        /*this.refreshJobEmployeeCount();*/ 
     }
 
     refreshJobCategoryCount() {
@@ -49,38 +70,44 @@ class WelcomeComponent extends Component {
         )
     }
 
-    refreshJobEmployeeCount() {
+    /*refreshJobEmployeeCount() {
         OptimizerService.getJobEmployeeCount()
         .then(
             response => {
                 this.setState({pieseries:response.data})
             }
         )
-    }
+    }*/
 
     render() {
         return(
             <>
                 <HeaderComponent/>
                 <Jumbotron>
-                    {<h1>Welcome {this.props.match.params.name}</h1>}
+                    {<h2>Selamat Datang {this.props.match.params.name}</h2>}
                     <p>
-                        This is a workforce management application, You can manage your employees <Link to="/employees">here</Link>.
+                        Anda dapat mengubah atau menambahkan karyawan <Link to="/employees">disini</Link>.
                     </p>
                     <p>
-                        You can manage job for your employees <Link to="/jobs">here</Link>.
+                        Anda dapat mengubah atau menambahkan pekerjaan untuk karyawan <Link to="/jobs">disini</Link>.
                     </p>
                 </Jumbotron>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6">
-                            <Chart options={this.state.chartOptions} series={this.state.series} type="pie" width="400" />
-                        </div>
-                        <div className="col-md-6">
+                            {/*<Chart options={this.state.chartOptions} series={this.state.series} type="pie" width="400" />*/}
                             <Chart
                                 options={this.state.pieoptions}
                                 series={this.state.pieseries}
                                 type="line"
+                                width="500"
+                            />
+                        </div>
+                        <div className="col-md-6">
+                            <Chart
+                                options={this.state.pieoptions1}
+                                series={this.state.pieseries1}
+                                type="bar"
                                 width="500"
                             />
                         </div>

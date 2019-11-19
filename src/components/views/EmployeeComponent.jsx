@@ -56,15 +56,15 @@ class EmployeeComponent extends Component {
         let errors = {}
         
         if(!values.name) {
-            errors.name = 'Enter an employee name'           
-        } else if(values.name.length < 4) {
-            errors.name = 'Enter at least 4 characters for employee name'
+            errors.name = 'Nama karyawan tidak boleh kosong'           
+        } else if(values.name.length < 2) {
+            errors.name = 'Panjang nama karyawan tidak boleh kurang dari dua huruf'
         }
 
-        if(!values.username) {
-            errors.nip = 'Enter a NIP'           
-        } else if(values.nip.length < 4) {
-            errors.nip = 'Enter at least 4 characters for employee username'
+        if(!values.email) {
+            errors.email = 'Email karyawan tidak boleh kosong'           
+        } else if(values.email.length < 15) {
+            errors.email = 'Panjang email karyawan tidak boleh kurang dari lima belas huruf'
         }
 
         return errors;
@@ -88,7 +88,8 @@ class EmployeeComponent extends Component {
                 joinDate:values.joinDate,
                 resignationDate:'',
                 employeeStatus:values.employeeStatus,
-                roleCode:values.roleCode
+                roleCode:values.roleCode,
+                active:"Y"
             }).then(() => this.props.history.push('/employees'))
         } else {
             console.log("Update")
@@ -106,7 +107,8 @@ class EmployeeComponent extends Component {
                 joinDate:values.joinDate,
                 resignationDate:'',
                 employeeStatus:values.employeeStatus,
-                roleCode:values.roleCode
+                roleCode:values.roleCode,
+                active:"Y"
             }).then(() => this.props.history.push('/employees'))
         }
     }
@@ -117,7 +119,7 @@ class EmployeeComponent extends Component {
         return (
             <div>
                 <HeaderComponent/>
-                <h4>New Employee Form</h4>
+                <h4>Form Karyawan Baru</h4>
                 <hr/>
                 <div className="container">
                     <div className="row">
@@ -140,11 +142,11 @@ class EmployeeComponent extends Component {
                                             <div className="row">
                                                 <div className="col-md-6">
                                                     <fieldset className="form-group">
-                                                        <label>Employee ID</label>
+                                                        <label>ID Karyawan</label>
                                                         <Field className="form-control" type="text" name="employeeId"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>Name</label>
+                                                        <label>Nama</label>
                                                         <Field className="form-control" type="text" name="name"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
@@ -156,25 +158,25 @@ class EmployeeComponent extends Component {
                                                         <Field className="form-control" type="password" name="password"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>Birth Place</label>
+                                                        <label>Tempat Lahir</label>
                                                         <Field className="form-control" type="text" name="birthPlace"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>Birth Date</label>
+                                                        <label>Tanggal Lahir</label>
                                                         <Field className="form-control" type="date" name="birthDate"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>Address</label>
+                                                        <label>Alamat</label>
                                                         <Field className="form-control" type="text" name="address"/>
                                                     </fieldset>
                                                 </div>
                                                 <div className="col-md-6">                                            
                                                     <fieldset className="form-group">
-                                                        <label>Gender</label>
+                                                        <label>Jenis Kelamin</label>
                                                         <Field className="form-control" type="text" name="gender"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>Phone Number</label>
+                                                        <label>Nomor Telepon</label>
                                                         <Field className="form-control" type="text" name="phoneNumber"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
@@ -182,24 +184,24 @@ class EmployeeComponent extends Component {
                                                         <Field className="form-control" type="text" name="email"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>Join Date</label>
+                                                        <label>Tanggal Bergabung</label>
                                                         <Field className="form-control" type="date" name="joinDate"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>Resignation Date</label>
+                                                        <label>Tanggal Keluar</label>
                                                         <Field className="form-control" type="date" name="resignationDate"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>Employee Status</label>
+                                                        <label>Status Karyawan</label>
                                                         <Field className="form-control" type="text" name="employeeStatus"/>
                                                     </fieldset>
                                                     <fieldset className="form-group">
-                                                        <label>Role</label>
+                                                        <label>Jabatan</label>
                                                         <Field className="form-control" type="text" name="roleCode"/>
                                                     </fieldset>
                                                 </div>                                                
                                             </div>                                            
-                                            <button className="btn btn-success" type="submit">Save</button>                                            
+                                            <button className="btn btn-success" type="submit">Simpan</button>                                            
                                         </Form>
                                     )                        
                                 }

@@ -70,7 +70,7 @@ class LoginComponent extends Component {
                     {this.state.hasLoginFailed && <div className="alert alert-primary">Invalid Credentials</div>}
                     <div className="container-gray">
                         <div className="col login-sec">
-                            <h2 className="text-center">Sign In</h2>
+                            <h2 className="text-center">Sign In Aplikasi</h2>
                                 <div className="form-group">
                                     <label htmlFor="usr">Email:</label>
                                     <input type="text" id="usr" className="form-control" name="email" value={this.state.email} onChange={this.handleChange} />
@@ -80,7 +80,7 @@ class LoginComponent extends Component {
                                     <input type="password" id="pwd" className="form-control" name="password" value={this.state.password} onChange={this.handleChange} />
                                     <br/>
                                     <button className="btn btn-primary" onClick={this.loginClicked}>
-                                        Submit
+                                        Kirim
                                     </button>
                                 </div>
                         </div>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Table from 'react-bootstrap/Table';
+import DataTable from 'react-data-table-component';
 import EmployeeSkillService from '../services/EmployeeSkillService.js';
 import FooterComponentList from './FooterComponentList.jsx';
 import HeaderComponent from '../views/HeaderComponent.jsx';
@@ -9,6 +9,7 @@ class ListEmployeeComponent extends Component {
         super(props)
         this.state = {
             employeeSkills: [],
+            employeeSkillsCustom: [],
             message:""
         }
         this.refreshEmployeeSkills = this.refreshEmployeeSkills.bind(this);
@@ -23,19 +24,30 @@ class ListEmployeeComponent extends Component {
 
     refreshEmployeeSkills() {
         EmployeeSkillService.retrieveAllEmployeeSkills("name")
-            .then(
-                response => {
-                    this.setState({employeeSkills: response.data})
-                }
+            .then(response =>
+                response.data.map(
+                    employeeSkill => {
+                        const item = {
+                            id: employeeSkill.id,
+                            name: employeeSkill.employeeId,
+                            skill: employeeSkill.skillCode,
+                        }
+                        this.setState(previousState => ({
+                            employeeSkillsCustom: [...previousState.employeeSkillsCustom, item]
+                        }))
+                    }
+                )
             )
     }
 
     deleteEmployeeSkillClicked(id, name) {
         EmployeeSkillService.deleteEmployeeSkill(id)
             .then(
+                window.location.reload()                
+            )
+            .then(
                 response => {
-                    this.setState({message: `Delete of employee skill ${name} Successful`})
-                    this.refreshEmployeeSkills()
+                    this.setState({message: `Keahlian karyawan berhasil dihapus`})
                 }
             )
     }
@@ -49,35 +61,45 @@ class ListEmployeeComponent extends Component {
     }
 
     render() {
+        const columns = [
+            {
+                name: 'Nama',
+                selector: 'name',
+                sortable: true,
+            },
+            {
+                name: 'Keahlian',
+                selector: 'skill',
+                sortable: true,
+                left: true,
+            },
+            {
+                name: 'Ubah',
+                button: true,
+                cell: row => <button className="btn btn-sm btn-info" onClick={() => this.updateEmployeeSkillClicked(row.id)}>Ubah</button>,
+            },
+            {
+                name: 'Hapus',
+                button: true,
+                cell: row => <button className="btn btn-sm btn-danger" onClick={() => this.deleteEmployeeSkillClicked(row.id)}>Hapus</button>,
+            },
+        ];
         return(
             <div>
                 <HeaderComponent/>
-                <h3>List Employee Skill</h3>
                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
                 <div className="container">
-                    <Table bordered striped hover size="sm">
-                        <thead>
-                            <tr>
-                                <th>Employee Name</th>
-                                <th>Skill</th>
-                                <th>Update</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                this.state.employeeSkills.map (
-                                    employeeSkill => 
-                                    <tr key={employeeSkill.id}>
-                                        <td>{employeeSkill.employeeId}</td>
-                                        <td>{employeeSkill.skillCode}</td>
-                                        <td><button className="btn btn-sm btn-info" onClick={() => this.updateEmployeeSkillClicked(employeeSkill.id)}>Update</button></td>
-                                        <td><button className="btn btn-sm btn-danger" onClick={() => this.deleteEmployeeSkillClicked(employeeSkill.id, employeeSkill.id)}>Delete</button></td>
-                                    </tr>
-                                )
-                            }                        
-                        </tbody>
-                    </Table>
+                    <br/>
+                    <h5>Daftar Keahlian Karyawan</h5>
+                    <DataTable
+                        columns={columns}
+                        data={this.state.employeeSkillsCustom}
+                        pagination
+                        paginationPerPage={5}
+                        paginationRowsPerPageOptions={[5]}
+                        highlightOnHover
+                        pointerOnHover
+                    />
                     <div className="row">
                         <button className="btn btn-info" onClick={() => this.addEmployeeSkillClicked()}>Add</button>
                     </div>

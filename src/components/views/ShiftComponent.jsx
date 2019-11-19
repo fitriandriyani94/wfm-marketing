@@ -37,29 +37,29 @@ class ShiftComponent extends Component {
         let errors = {}
         
         if(!values.shiftCode) {
-            errors.shiftCode = 'Enter a shift code'           
-        } else if(values.shiftCode.length < 1) {
-            errors.shiftCode = 'Enter at least 1 characters for shift code'
+            errors.shiftCode = 'Kode shift tidak boleh kosong'           
+        } else if(values.shiftCode.length < 2) {
+            errors.shiftCode = 'Panjang kode shift tidak boleh kurang dari dua huruf'
         }
 
         if(!values.shiftName) {
-            errors.shiftName = 'Enter a shift name'           
+            errors.shiftName = 'Nama shift tidak boleh kosong'           
         } else if(values.shiftName.length < 4) {
-            errors.shiftName = 'Enter at least 4 characters for shift name'
+            errors.shiftName = 'Panjang nama shift tidak boleh kurang dari empat huruf'
         }
 
         return errors;
     }
 
     onSubmit(values) {
-        console.log("Here")
         if(this.state.id === '-1') {
             console.log("Create")
             ShiftDataService.createShift({
                 shiftCode:values.shiftCode,
                 shiftName:values.shiftName,
                 startTime:values.startTime,
-                endTime:values.endTime
+                endTime:values.endTime,
+                active:"Y"
             }).then(() => this.props.history.push('/shifts'))
         } else {
             console.log("Update")
@@ -67,7 +67,8 @@ class ShiftComponent extends Component {
                 shiftCode:values.shiftCode,
                 shiftName:values.shiftName,
                 startTime:values.startTime,
-                endTime:values.endTime
+                endTime:values.endTime,
+                active:"Y"
             }).then(() => this.props.history.push('/shifts'))
         }
     }
@@ -78,7 +79,7 @@ class ShiftComponent extends Component {
         return (
             <div>
                 <HeaderComponent/>
-                <h4>New Shift Form</h4>
+                <h4>Form Shift Baru</h4>
                 <hr/>
                 <div className="container">
                     <div className="row">
@@ -99,22 +100,22 @@ class ShiftComponent extends Component {
                                             <ErrorMessage name="shiftCode" component="div" className="alert alert-warning"/>                                            
                                             <ErrorMessage name="shiftName" component="div" className="alert alert-warning"/>
                                             <fieldset className="form-group">
-                                                <label>Shift Code</label>
+                                                <label>Kode Shift</label>
                                                 <Field className="form-control" type="text" name="shiftCode"/>
                                             </fieldset>
                                             <fieldset className="form-group">
-                                                <label>Shift Name</label>
+                                                <label>Nama Shift</label>
                                                 <Field className="form-control" type="text" name="shiftName"/>
                                             </fieldset>
                                             <fieldset className="form-group">
-                                                <label>Start Time</label>
+                                                <label>Jam Mulai</label>
                                                 <Field className="form-control" type="time" name="startTime"/>
                                             </fieldset>
                                             <fieldset className="form-group">
-                                                <label>End Time</label>
+                                                <label>Jam Selesai</label>
                                                 <Field className="form-control" type="time" name="endTime"/>
                                             </fieldset>
-                                            <button className="btn btn-success" type="submit">Save</button>
+                                            <button className="btn btn-success" type="submit">Simpan</button>
                                         </Form>
                                     )                        
                                 }
